@@ -1,0 +1,128 @@
+
+
+Backend Features
+User Authentication: Registration, login, and profile management.
+CRUD Operations: Create, read, update, delete posts and comments.
+Categories and Tags: Filter posts by categories and tags.
+Pagination: Display posts in manageable chunks.
+Frontend Features
+Responsive Design: Make it mobile-friendly using frameworks like Bootstrap.
+Search Functionality: Enable users to search for posts by title or content.
+Rich Text Editor: Add a WYSIWYG editor for creating posts.
+Additional Features
+Admin Panel: Allow admin users to manage categories, tags, and posts.
+Analytics: Display stats like most popular posts or user activity.
+Media Management: Upload and manage images in posts.
+Example Categories for a Portfolio Demo Blog
+Here’s a set of categories that are broad yet practical for demonstrating blog functionality:
+
+Technology: Posts about coding, tools, and tech news.
+Lifestyle: Personal productivity, travel experiences, or hobbies.
+Creative: Art, photography, or creative writing.
+Education: Tutorials, learning tips, or book reviews.
+Entertainment: Movie or game reviews.
+Why These Categories?
+Show Variety: Demonstrates that the app supports multiple types of content.
+Attract Employers: Categories like Technology and Education are relevant to professional interests.
+Flexible for Expansion: Easy to adapt to a niche later.
+
+Tags:
+Technology
+AI and Machine Learning
+Web Development
+Tech Reviews
+Gadgets
+Programming Tutorials
+Tech Trends
+Cybersecurity
+Software Updates
+Mobile Technology
+Innovation
+Lifestyle
+Health and Wellness
+Travel Tips
+Productivity Hacks
+Minimalism
+Fitness
+Home Decor
+Sustainable Living
+Work-Life Balance
+Fashion
+Self-Care
+Creative
+Photography
+Writing Tips
+Art and Design
+DIY Projects
+Creative Inspiration
+Graphic Design
+Music Production
+Filmmaking
+Creative Writing
+Handmade Crafts
+Education
+Learning Strategies
+EdTech
+Online Courses
+Language Learning
+STEM Education
+Study Tips
+Career Development
+Educational Apps
+Lifelong Learning
+Teaching Methods
+Entertainment
+Movie Reviews
+TV Shows
+Music Recommendations
+Gaming
+Celebrity News
+Book Reviews
+Streaming Platforms
+Comedy
+Pop Culture
+Event Coverage
+
+
+Users:
+POST /users/register: Register a user.
+POST /users/login: Authenticate a user.
+GET /users/:id: Get user profile.
+
+Posts:
+GET /posts: Get all posts.
+POST /posts: Create a post.
+GET /posts/:id: Get a specific post.
+PUT /posts/:id: Update a post.
+DELETE /posts/:id: Delete a post.
+
+
+Comments:
+POST /posts/:postId/comments: Add a comment.
+GET /posts/:postId/comments: Get all comments on a post.
+
+
+{
+    "username": "user1",
+    "email": "user1@email.com",
+    "password": "sC1970#Rb"
+}
+
+
+{
+    "username": "user2",
+    "email": "user1@email.com",
+    "password": "$31SS3"
+}
+
+{
+    "username": "user3",
+    "email": "user3@email.com",
+    "password": "A3r$3_"
+}
+
+{
+    "username": "user4",
+    "email": "user4@email.com",
+    "password": "#Graz2003"
+}
