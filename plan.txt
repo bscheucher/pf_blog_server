@@ -111,7 +111,7 @@ GET /posts/:postId/comments: Get all comments on a post.
 
 {
     "username": "user2",
-    "email": "user1@email.com",
+    "email": "user2@email.com",
     "password": "$31SS3"
 }
 
@@ -125,4 +125,12 @@ GET /posts/:postId/comments: Get all comments on a post.
     "username": "user4",
     "email": "user4@email.com",
     "password": "#Graz2003"
+}
+
+sB1970#C
+
+{
+    "username": "bscheucher",
+    "email": "bscheucher@hotmail.com",
+    "password": "sB1970#C"
 }

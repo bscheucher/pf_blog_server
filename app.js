@@ -6,13 +6,22 @@ import { errorHandler, notFoundHandler } from "./middleware/errorMiddleware.js";
 import routes from "./routes/index.js";
 import session from "express-session";
 import "dotenv/config";
+import cors from "cors";
 
 const app = express();
 
-// Middleware
-coreMiddleware(app);
-securityMiddleware(app);
+const corsOptions = {
+  origin: "http://localhost:3000", // Allow requests from the React app
+  credentials: true, // Allow credentials (cookies, headers, etc.)
+};
 
+// Configure CORS
+app.use(cors(corsOptions));
+
+// Core middleware
+coreMiddleware(app);
+
+// Session Middleware (after CORS to handle sessions for authenticated users)
 app.use(
   session({
     secret: process.env.SECRET_KEY, // Replace with a strong secret key

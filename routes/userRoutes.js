@@ -1,37 +1,19 @@
 import express from "express";
-import { check, validationResult } from "express-validator";
+import { validateUserInput } from "../middleware/validateUserMiddleware.js";
 import {
   register,
   login,
   logout,
   getUserById,
+  updateUser,
 } from "../controllers/userController.js";
 
-import { ensureAuthenticated } from "../middleware/ensureAuthenticated.js";
+import { authenticateToken } from "../middleware/authenticateToken.js";
 
 const router = express.Router();
 
 // Register route
-router.post(
-  "/register",
-  [
-    check("username")
-      .isLength({ min: 3 })
-      .withMessage("Username must be at least 3 characters."),
-    check("email").isEmail().withMessage("Invalid email format."),
-    check("password")
-      .isLength({ min: 6 })
-      .withMessage("Password must be at least 6 characters."),
-  ],
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    next();
-  },
-  register
-);
+router.post("/register", validateUserInput, register);
 
 // Login route
 router.post("/login", login);
@@ -40,6 +22,8 @@ router.post("/login", login);
 router.post("/logout", logout);
 
 // Get existing user
-router.get("/:id", ensureAuthenticated, getUserById);
+router.get("/:id",authenticateToken, getUserById);
+
+router.put("/:id/update", validateUserInput, updateUser);
 
 export default router;

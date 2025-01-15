@@ -1,7 +1,9 @@
 import {
   addTagToPost,
   findTagsOfPost,
+  findAllTags,
   removeTagFromPost,
+  editPostTags,
 } from "../services/tagService.js";
 
 const validateIds = (postId, tagId) => {
@@ -26,25 +28,53 @@ export const assignTagToPost = async (req, res) => {
   }
 };
 
+export const updatePostTags = async (req, res) => {
+  try {
+    const { postId, tagIds } = req.body;
+
+    if (!postId || !Array.isArray(tagIds)) {
+      return res.status(400).json({
+        error: "Invalid input data. postId and tagIds are required.",
+      });
+    }
+
+    const updated = await editPostTags(postId, tagIds);
+
+    res.status(200).json(updated);
+  } catch (err) {
+    console.error("Error updating post tags:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const getAllTags = async (req, res) => {
+  try {
+    const tags = await findAllTags();
+    res.status(200).json(tags);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const getTagsOfPost = async (req, res) => {
   const postId = parseInt(req.params.postId, 10);
 
   if (isNaN(postId) || postId <= 0) {
     return res
       .status(400)
-      .send("Invalid post ID. It must be a positive integer.");
+      .json({ error: "Invalid post ID. It must be a positive integer." });
   }
 
   try {
     const tags = await findTagsOfPost(postId);
-    if (tags.length > 0) {
-      res.status(200).json(tags);
-    } else {
-      res.status(404).send("No tags found for the specified post.");
-    }
+
+    // Return an empty array if no tags are found
+    res.status(200).json(tags.length > 0 ? tags : []);
   } catch (err) {
     console.error("Error fetching tags:", err.message);
-    res.status(500).send("An error occurred while fetching the tags.");
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching the tags." });
   }
 };
 

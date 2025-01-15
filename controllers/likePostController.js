@@ -4,6 +4,7 @@ import {
   removeLikeFromPost,
 } from "../services/likePostService.js";
 
+
 const validateIds = (postId, userId) => {
   if (!postId || isNaN(postId) || postId <= 0) {
     throw new Error("Invalid post ID. It must be a positive integer.");
@@ -35,7 +36,7 @@ export const getLikesOfPost = async (req, res) => {
 
     const likes = await findLikesOfPost(postId);
     if (likes.length === 0) {
-      return res.status(404).send("No likes found for the specified post.");
+      return res.status(200).json({ message: "No likes found for the specified post.", likes: [] });
     }
     res.status(200).json(likes);
   } catch (err) {
@@ -43,6 +44,7 @@ export const getLikesOfPost = async (req, res) => {
     res.status(500).send("An error occurred while fetching the likes.");
   }
 };
+
 
 export const deleteLikeFromPost = async (req, res) => {
   try {

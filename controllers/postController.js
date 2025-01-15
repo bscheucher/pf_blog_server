@@ -4,6 +4,9 @@ import {
   findPostById,
   editPost,
   removePost,
+  findPostsByCategoryName,
+  findPostsByTagName,
+  seekInPosts,
 } from "../services/postService.js";
 
 export const createPost = async (req, res) => {
@@ -40,6 +43,56 @@ export const getPostById = async (req, res) => {
   }
 };
 
+export const getPostsByCategoryName = async (req, res) => {
+  const categoryName = req.query.categoryName; // Use req.query instead of req.body
+  console.log(req.query);
+
+  if (!categoryName || typeof categoryName !== "string") {
+    console.log(categoryName);
+    return res.status(400).json({ error: "Invalid category name" });
+  }
+
+  try {
+    const posts = await findPostsByCategoryName(categoryName);
+
+    if (posts.length === 0) {
+      return res
+        .status(200)
+        .json({ message: "No posts found for the specified category" });
+    }
+
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error("Error in getPostsByCategoryNames:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getPostsByTagName = async (req, res) => {
+  const tagName = req.query.tagName;
+  console.log(req.query);
+
+  if (!tagName || typeof tagName !== "string") {
+    console.log(tagName);
+    return res.status(400).json({ error: "Invalid tag name" });
+  }
+
+  try {
+    const posts = await findPostsByTagName(tagName);
+
+    if (posts.length === 0) {
+      return res
+        .status(200)
+        .json({ message: "No posts found for the specified tag" });
+    }
+
+    res.status(200).json(posts);
+  } catch (err) {
+    console.error("Error in getPostsByTagNames:", err.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 export const updatePost = async (req, res) => {
   try {
     const { title, content } = req.body;
@@ -68,11 +121,46 @@ export const updatePost = async (req, res) => {
 };
 
 export const deletePost = async (req, res) => {
+  const { id } = req.params;
+
+  // Validate if the ID is provided
+  if (!id) {
+    return res.status(400).json({ error: "Post ID is required" });
+  }
+
   try {
-    const post = await removePost(req.params.id);
-    if (!post) return res.status(404).json({ message: "Post not found" });
-    res.status(200).json({ message: "Post deleted successfully" });
+    // Call the service function to remove the post
+    await removePost(id);
+    res.status(200).json({ message: `Post with ID ${id} has been deleted` });
+  } catch (error) {
+    // Handle "not found" error separately
+    if (error.message.includes("not found")) {
+      return res.status(404).json({ error: error.message });
+    }
+
+    // Handle general server errors
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const searchInPosts = async (req, res) => {
+  const queryObject = req.query.query;
+  const query = queryObject.query;
+  console.log(query);
+
+  try {
+    if (!query || query.trim().length < 3) {
+      return res
+        .status(400)
+        .json({ error: "Query must be at least 3 characters long." });
+    }
+
+    const posts = await seekInPosts(query.trim());
+    return res.status(200).json(posts);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(`Error searching for query "${query}":`, err);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while searching posts." });
   }
 };
