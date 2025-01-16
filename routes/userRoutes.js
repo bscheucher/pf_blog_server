@@ -22,8 +22,8 @@ router.post("/login", login);
 router.post("/logout", logout);
 
 // Get existing user
-router.get("/:id",authenticateToken, getUserById);
+router.get("/:id", authenticateToken, getUserById);
 
-router.put("/:id/update", validateUserInput, updateUser);
+router.put("/:id/update", validateUserInput, authenticateToken, updateUser);
 
 export default router;

@@ -127,7 +127,7 @@ GET /posts/:postId/comments: Get all comments on a post.
     "password": "#Graz2003"
 }
 
-sB1970#C
+
 
 {
     "username": "bscheucher",

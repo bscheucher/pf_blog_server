@@ -1,4 +1,5 @@
 import express from "express";
+import { validateUserInput } from "../middleware/validateUserMiddleware.js";
 import {
   createPost,
   getAllPosts,
@@ -35,35 +36,36 @@ import {
   deleteLikeFromPost,
   getLikesOfPost,
 } from "../controllers/likePostController.js";
+import { authenticateToken } from "../middleware/authenticateToken.js";
 
 const router = express.Router();
 
-router.post("/", createPost);
+router.post("/", authenticateToken, createPost);
 router.get("/", getAllPosts);
 router.get("/of-category", getPostsByCategoryName);
 router.get("/of-tag", getPostsByTagName);
 router.get("/search", searchInPosts);
-router.post("/comment", createComment);
+router.post("/comment", authenticateToken, createComment);
 
 router.get("/categories", getAllCategories);
-router.post("/add-category", assignCategoryToPost);
-router.put("/update-categories", updatePostCategories);
-router.delete("/delete-category", deleteCategoryFromPost);
+router.post("/add-category", authenticateToken, assignCategoryToPost);
+router.put("/update-categories", authenticateToken, updatePostCategories);
+router.delete("/delete-category", authenticateToken, deleteCategoryFromPost);
 router.get("/:postId/categories", getCategoriesOfPost);
 
 router.get("/tags", getAllTags);
-router.post("/add-tag", assignTagToPost);
-router.put("/update-tags", updatePostTags);
-router.delete("/delete-tag", deleteTagFromPost);
+router.post("/add-tag", authenticateToken, assignTagToPost);
+router.put("/update-tags", authenticateToken, updatePostTags);
+router.delete("/delete-tag", authenticateToken, deleteTagFromPost);
 router.get("/:postId/tags", getTagsOfPost);
 
-router.post("/add-like", assignLikeToPost);
-router.delete("/delete-like", deleteLikeFromPost);
+router.post("/add-like", authenticateToken, assignLikeToPost);
+router.delete("/delete-like", authenticateToken, deleteLikeFromPost);
 router.get("/:postId/likes", getLikesOfPost);
 
 router.get("/:id", getPostById);
 router.get("/:postId/comments", getAllCommentsOfPosts);
-router.put("/:id", updatePost);
-router.delete("/:id", deletePost);
+router.put("/:id", authenticateToken, updatePost);
+router.delete("/:id", authenticateToken, deletePost);
 
 export default router;
