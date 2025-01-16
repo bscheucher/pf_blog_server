@@ -10,10 +10,18 @@ import cors from "cors";
 
 const app = express();
 
+const allowedOrigins = ["http://localhost:3000", "https://pf-blog-client.onrender.com"];
 const corsOptions = {
-  origin: "http://localhost:3000", // Allow requests from the React app
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true); // Allow the origin
+    } else {
+      callback(new Error("Not allowed by CORS")); // Reject the origin
+    }
+  },
   credentials: true, // Allow credentials (cookies, headers, etc.)
 };
+
 
 // Configure CORS
 app.use(cors(corsOptions));
