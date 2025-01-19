@@ -102,35 +102,3 @@ POST /posts/:postId/comments: Add a comment.
 GET /posts/:postId/comments: Get all comments on a post.
 
 
-{
-    "username": "user1",
-    "email": "user1@email.com",
-    "password": "sC1970#Rb"
-}
-
-
-{
-    "username": "user2",
-    "email": "user2@email.com",
-    "password": "$31SS3"
-}
-
-{
-    "username": "user3",
-    "email": "user3@email.com",
-    "password": "A3r$3_"
-}
-
-{
-    "username": "user4",
-    "email": "user4@email.com",
-    "password": "#Graz2003"
-}
-
-
-
-{
-    "username": "bscheucher",
-    "email": "bscheucher@hotmail.com",
-    "password": "sB1970#C"
-}
